@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+const config = useRuntimeConfig()
+
 export const useAlbumsStore = defineStore('albums', {
   state: () => ({
     albums: [],
@@ -11,7 +13,7 @@ export const useAlbumsStore = defineStore('albums', {
   actions: {
     async getAlbums() {
       this.loadingAlbums = true
-      const res = await fetch('http://localhost:3001/api/vk/albums', {
+      const res = await fetch(`${config.public.backendUrl}api/vk/albums`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -36,7 +38,7 @@ export const useAlbumsStore = defineStore('albums', {
       album.progress = 0
       album.errors = []
       album.status = 'loading'
-      const res = await fetch('http://localhost:3001/api/vk/photos', {
+      const res = await fetch(`${config.public.backendUrl}api/vk/photos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

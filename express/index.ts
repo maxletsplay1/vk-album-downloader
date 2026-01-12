@@ -3,13 +3,16 @@ import axios from 'axios'
 import cors from 'cors'
 import fs from 'fs'
 import path from 'path'
+import dotenv from 'dotenv'
 
 const app = express()
 const PORT = 3001
 
+dotenv.config()
+
 app.use(express.json())
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   methods: ['GET', 'POST']
 }))
 
@@ -95,5 +98,5 @@ app.post('/api/vk/download', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`VK Express server running at http://localhost:${PORT}`)
+  console.log(`Express server running at http://localhost:${PORT}`)
 })
