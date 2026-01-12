@@ -29,7 +29,7 @@ app.post('/api/vk/albums', async (req, res) => {
         need_system: 1,
         photo_sizes: 1,
         need_covers: 1,
-        v: '5.131',
+        v: '5.199',
         access_token
       }
     })
@@ -60,10 +60,10 @@ app.post('/api/vk/photos', async (req, res) => {
           count: Math.min(limit, album_size - offset),
           offset,
           access_token,
-          v: '5.131'
+          v: '5.199'
         }
       })
-
+      // TODO: при альбоме с отметками вк апи ломается
       const items = response.data.response.items
       allPhotos.push(...items)
       offset += items.length
@@ -77,25 +77,47 @@ app.post('/api/vk/photos', async (req, res) => {
 })
 
 app.post('/api/vk/download', async (req, res) => {
-  const { url, destFolder, filename } = req.body
-  if (!url || !destFolder || !filename) {
-    return res.status(400).json({ error: 'url, destFolder, filename required' })
+  const { id, url, folder } = req.body
+
+  if (!id || !url || !folder) {
+    return res.status(400).json({
+      success: false,
+      id,
+      message: 'id, url, folder required'
+    })
   }
 
   try {
+    const ROOT_DIR = path.resolve('vk_albums')
+    const destFolder = path.join(ROOT_DIR, folder)
+
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true })
     }
 
-    const response = await axios.get(url, { responseType: 'arraybuffer' })
-    fs.writeFileSync(path.join(destFolder, filename), response.data)
+    const filePath = path.join(destFolder, `${id}.jpg`)
 
-    res.json({ success: true })
+    const response = await axios.get(url, {
+      responseType: 'arraybuffer'
+    })
+
+    fs.writeFileSync(filePath, response.data)
+
+    return res.status(200).json({
+      success: true,
+      id
+    })
   } catch (err) {
-    console.error(err.message)
-    res.status(500).json({ success: false, message: err.message })
+    console.error(err)
+
+    return res.status(500).json({
+      success: false,
+      id,
+      message: err.message
+    })
   }
 })
+
 
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}`)

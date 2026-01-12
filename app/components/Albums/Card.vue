@@ -25,7 +25,7 @@
           :color="album.status == 'completed'? 'success' : 'primary'"
           class="mt-3 self-start"
           :loading="album.status === 'loading'"
-          @click="albumsStore.getPhotos(album.id, album.size)"
+          @click="albumsStore.getPhotos(album.id, album.size, album.title)"
         >
           {{ album.status == 'completed'? 'Альбом скачан' : 'Скачать альбом' }}
         </UButton>
@@ -68,9 +68,9 @@ const albumsStore = useAlbumsStore()
 
 watch(
   () => props.album.status,
-  async (newValue) => {
+  async (newValue, oldValue) => {
     if (newValue === 'completed') {
-      await nextTick() // ждём, пока DOM обновится
+      await nextTick()
       launchConfettiOnCard('album-card' + props.album.id)
     }
   }

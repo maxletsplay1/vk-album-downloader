@@ -14,7 +14,7 @@
       />
     </div>
     <div
-      v-if="albumStore.albums"
+      v-if="albumStore.albums.length"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
       <Card
@@ -25,9 +25,12 @@
     </div>
     <div
       v-else
-      class=""
+      class="flex flex-col items-center gap-4 opacity-20"
     >
-      <p>Нет доступных альбомов</p>
+      <Icon name="i-lucide-camera-off" size="60" />
+      <p class="text-4xl">
+        Нет доступных альбомов
+      </p>
     </div>
   </div>
 </template>
