@@ -50,6 +50,8 @@
 <script setup lang="ts">
 import launchConfettiOnCard from '~/composables/confetti'
 
+const toastStore = useToastStore()
+
 interface Album {
   id: number
   title: string
@@ -72,6 +74,7 @@ watch(
     if (newValue === 'completed') {
       await nextTick()
       launchConfettiOnCard('album-card' + props.album.id)
+      toastStore.addSuccess('Успех!', `Альбом '${props.album.title}' скачан`)
     }
   }
 )
