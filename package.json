@@ -3,12 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "run-p build:server build:client",
-    "build:server": "tsc -p express/tsconfig.json && mv ./.output-express/index.js ./.output-express/index.cjs",
-    "build:client": "nuxt build",
-    "dev": "run-p dev:server dev:client",
-    "dev:server": "node ./express/index.ts",
-    "dev:client": "nuxt dev",
+    "build": "nuxt build",
+    "dev": "nuxt dev",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
@@ -21,7 +17,6 @@
     "axios": "^1.13.2",
     "canvas-confetti": "^1.9.4",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "nuxt": "^4.2.2"
   },
@@ -36,6 +31,5 @@
     "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.1"
-  },
-  "packageManager": "pnpm@10.26.1"
+  }
 }
