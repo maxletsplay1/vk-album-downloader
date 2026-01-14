@@ -2,13 +2,13 @@
   "name": "vk-album-downloader",
   "private": true,
   "type": "module",
+  "main": "index.js",
+  "version": "0.0.1",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "electron:package": "nuxt build && electron-forge package",
+    "electron:make": "nuxt build && electron-forge make"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.82",
@@ -21,14 +21,18 @@
     "nuxt": "^4.2.2"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.8.3",
+    "@electron-forge/maker-dmg": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
     "@nuxt/eslint": "^1.12.1",
     "@pinia/nuxt": "^0.11.3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.6",
+    "electron": "^39.2.7",
     "eslint": "^9.39.2",
-    "npm-run-all": "^4.1.5",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.1"
   }

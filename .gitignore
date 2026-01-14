@@ -1,16 +1,16 @@
 # Nuxt dev/build outputs
-.output-nuxt
+.output
 .data
 .nuxt
 .nitro
 .cache
 dist
 
-# Express dev/build outputs
-.output-express
-
 # Node dependencies
 node_modules
+
+# Electron
+out
 
 # Logs
 logs
