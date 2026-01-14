@@ -6,9 +6,7 @@
   "version": "0.0.1",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "electron:package": "nuxt build && electron-forge package",
-    "electron:make": "nuxt build && electron-forge make"
+    "dev": "nuxt dev"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.82",
@@ -21,10 +19,6 @@
     "nuxt": "^4.2.2"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.8.3",
-    "@electron-forge/maker-dmg": "^7.11.1",
-    "@electron-forge/maker-squirrel": "^7.11.1",
-    "@electron-forge/maker-zip": "^7.11.1",
     "@nuxt/eslint": "^1.12.1",
     "@pinia/nuxt": "^0.11.3",
     "@types/canvas-confetti": "^1.9.0",
