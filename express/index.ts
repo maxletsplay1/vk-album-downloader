@@ -3,6 +3,7 @@ import axios from 'axios'
 import cors from 'cors'
 import fs from 'fs'
 import path from 'path'
+import os from 'os'
 import dotenv from 'dotenv'
 
 const app = express()
@@ -88,8 +89,8 @@ app.post('/api/vk/download', async (req, res) => {
   }
 
   try {
-    const ROOT_DIR = path.resolve('vk_albums')
-    const destFolder = path.join(ROOT_DIR, folder)
+    const downloadsDir = path.join(os.homedir(), 'Downloads')
+    const destFolder = path.join(downloadsDir, 'vk_albums', folder)
 
     if (!fs.existsSync(destFolder)) {
       fs.mkdirSync(destFolder, { recursive: true })
@@ -117,7 +118,6 @@ app.post('/api/vk/download', async (req, res) => {
     })
   }
 })
-
 
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}`)
