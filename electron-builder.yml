@@ -21,7 +21,7 @@ mac:
     - target: dmg
       arch:
         - arm64
-#        - x64
+        - x64
   icon: build_assets/logo.icns
   category: public.app-category.productivity
 
