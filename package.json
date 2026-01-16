@@ -2,7 +2,7 @@
   "name": "vk-album-downloader",
   "type": "module",
   "main": "electron.js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "mlpoffff",
   "description": "Загрузчик альбомов фотографий ВК",
   "private": true,
@@ -10,7 +10,6 @@
     "build": "nuxt build",
     "build:electron": "npm run build && electron-builder --config electron-builder.yml",
     "dev": "nuxt dev",
-    "dev:electron": "electron .",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
@@ -19,7 +18,6 @@
     "@nuxt/ui": "^4.3.0",
     "axios": "^1.13.2",
     "canvas-confetti": "^1.9.4",
-    "cors": "^2.8.5",
     "express": "^5.2.1",
     "get-port": "^7.1.0",
     "nuxt": "^4.2.2",
@@ -29,7 +27,6 @@
     "@nuxt/eslint": "^1.12.1",
     "@pinia/nuxt": "^0.11.3",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.6",
     "electron": "^39.2.7",

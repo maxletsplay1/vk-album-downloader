@@ -8,20 +8,25 @@ let nuxtProcess
 let nuxtServerPath
 
 async function createWindow(port) {
+
   if (app.isPackaged) {
     nuxtServerPath = path.join(process.resourcesPath, 'app', '.output', 'server', 'index.mjs')
     nuxtProcess = utilityProcess.fork(nuxtServerPath, [], {
+      windowsHide: true,
       env: {
+        ...process.env,
         PORT: `${port}`
       }
     })
   } else {
-    nuxtProcess = spawn('npm', ['run', 'dev'], {
+    nuxtServerPath = path.join(process.cwd(), '.output', 'server', 'index.mjs')
+    nuxtProcess = spawn('node', [nuxtServerPath], {
+      windowsHide: false,
+      stdio: 'ignore',
       env: {
         ...process.env,
-        PORT: String(port)
-      },
-      stdio: 'inherit'
+        PORT: `${port}`
+      }
     })
   }
 
@@ -65,7 +70,7 @@ async function createWindow(port) {
 
 app.on('ready', async () => {
   const port = await getPort()
-  createWindow(port)
+  await createWindow(port)
 })
 
 app.on('window-all-closed', () => {

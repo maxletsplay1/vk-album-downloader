@@ -8,13 +8,16 @@ files:
   - .output/**
 
 win:
-  target: nsis
   icon: build_assets/logo.ico
 
 nsis:
   oneClick: false
   allowToChangeInstallationDirectory: true
   shortcutName: VKAlbum
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  installerSidebar: build_assets/sidebar.bmp
+  uninstallerSidebar: build_assets/sidebar.bmp
 
 mac:
   target:
