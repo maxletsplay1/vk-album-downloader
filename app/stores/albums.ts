@@ -30,7 +30,7 @@ export const useAlbumsStore = defineStore('albums', {
           cover: item.sizes[item.sizes.length - 1].src,
           progress: 0,
           status: 'none',
-          errors: []
+          forceStopped: false
         }))
       } catch (err) {
         console.error(err)
@@ -67,17 +67,20 @@ export const useAlbumsStore = defineStore('albums', {
 
         album.status = 'downloading'
         await this.downloadPhotos(photos, albumId, albumName)
-        album.status = 'completed'
       } catch (err: any) {
         console.error('VK API error:', err)
         album.status = 'none'
         this.toast.addError('Ошибка API', 'Не удалось получить данные об альбоме')
       }
     },
-    async downloadPhotos(photos, albumId, albumName) {
+    async downloadPhotos(photos, albumId: number, albumName: string) {
       const album = this.albums[this.albums.findIndex(album => album.id === albumId)]
       for (const photo of photos) {
         try {
+          if (album.forceStopped) {
+            album.forceStopped = false
+            return
+          }
           const res = await $fetch('/api/vk/download', {
             method: 'POST',
             body: {
@@ -98,11 +101,17 @@ export const useAlbumsStore = defineStore('albums', {
             'Ошибка скачивания',
             `Файл ${photo.id}.jpg не был скачан`
           )
-          album.errors.push(photo.id)
         } finally {
           album.progress++
         }
       }
+      album.status = 'completed'
+    },
+    stopDownloading(albumId: number) {
+      const album = this.albums[this.albums.findIndex(album => album.id === albumId)]
+      album.status = 'none'
+      album.forceStopped = true
+      this.toast.addSuccess('Успех!', `Скачивание альбома '${album.title}' отменено`)
     }
   }
 })

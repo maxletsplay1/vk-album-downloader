@@ -29,19 +29,23 @@
         >
           {{ album.status == 'completed'? 'Альбом скачан' : 'Скачать альбом' }}
         </UButton>
-        <UProgress
+        <div
           v-else
-          v-model="album.progress"
-          color="success"
-          status
-          :max="album.size"
-        />
-        <Info
-          v-if="album.errors.length > 0"
-          class="-mb-3"
-          text="Не все файлы были скачаны"
-          color="warning"
-        />
+          class="w-full flex gap-2 mt-2"
+        >
+          <UProgress
+            v-model="album.progress"
+            color="success"
+            status
+            :max="album.size"
+          />
+          <UButton
+            class="shrink-0 h-fit mt-1"
+            label="Отмена"
+            color="error"
+            @click="albumsStore.stopDownloading(album.id)"
+          />
+        </div>
       </div>
     </div>
   </UCard>
@@ -59,7 +63,6 @@ interface Album {
   cover: string
   status: string
   progress: number
-  errors: string[]
 }
 
 const props = defineProps<{
